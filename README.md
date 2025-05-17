@@ -34,37 +34,30 @@ In this design, we will implement a 4KB ROM. Since ROM is typically read-only, w
 The address width for 4KB memory is 12 bits (2^12 = 4096).
 
 
-// rom_memory.v
-module rom_memory (
+    module rom_memory (
     input wire clk,
-    input wire write_enable,   // Signal to enable write operation
-    input wire [11:0] address, // 12-bit address for 4KB memory
-    input wire [7:0] data_in,  // Data to write into ROM
-    output reg [7:0] data_out  // Data read from ROM
-);
-
-    // Declare ROM with 4096 memory locations (each 8 bits wide)
+    input wire write_enable,   
+    input wire [11:0] address,
+    input wire [7:0] data_in,  
+    output reg [7:0] data_out 
+    );
     reg [7:0] rom[0:4095];
-
     always @(posedge clk) begin
         if (write_enable) begin
-            // Write operation: Write data into the ROM at the given address
+            
             rom[address] <= data_in;
         end
-        // Read operation: Read data from the ROM at the given address
+      
         data_out <= rom[address];
     end
-endmodule
+    endmodule
 
 
 Testbench for 4KB ROM Memory
 
-// rom_memory_tb.v
-`timescale 1ns / 1ps
+// rom_memory_tb.v`timescale 1ns / 1ps
 
-module rom_memory_tb;
-
-    // Inputs
+    module rom_memory_tb;
     reg clk;
     reg write_enable;
     reg [11:0] address;
@@ -114,8 +107,8 @@ module rom_memory_tb;
         $monitor("Time = %0t | Write Enable = %b | Address = %h | Data In = %h | Data Out = %h", 
                  $time, write_enable, address, data_in, data_out);
     end
-
-endmodule
+    endmodule
+![Screenshot 2025-05-17 100655](https://github.com/user-attachments/assets/9b80bbf8-a3ae-408b-8911-2ea5cc603a82)
 
 
 Conclusion
